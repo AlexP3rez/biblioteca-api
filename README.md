@@ -37,7 +37,7 @@ Sistema de gestión de biblioteca digital que permite administrar usuarios, libr
 
 1. Clonar el repositorio:
 ```bash
-git clone https://github.com/TU_USUARIO/biblioteca-api.git
+git clone https://github.com/AlexP3rez/biblioteca-api.git
 cd biblioteca-api
 ```
 
@@ -280,7 +280,7 @@ eb deploy
 
 ## 👨‍💻 Autor
 
-**Tu Nombre**
+**Bryan Alexander Pérez Santos**
 - Universidad Mesoamericana
 - Ingeniería de Sistemas
 - Arquitectura de Sistemas I
@@ -295,7 +295,7 @@ Si encuentras algún problema, por favor crea un issue en el repositorio.
 
 ---
 
-**Fecha de entrega:** [Agregar fecha]
+**Fecha de entrega:** [14/11/2025]
 **Profesor:** Ing. Arturo Monterroso
 ```
 
