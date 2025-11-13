@@ -22,15 +22,25 @@ app.get('/', (req, res) => {
   res.json({
     success: true,
     mensaje: 'Servidor API funcionando correctamente',
-    version: '1.0.0'
+    version: '1.0.0',
+    ambiente: process.env.NODE_ENV || 'development'
+  });
+});
+
+// Health check para AWS
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
   });
 });
 
 // Middleware de manejo de errores (debe ir al final)
 app.use(errorHandler);
 
-// Puerto - AWS usa la variable PORT, local usa 3000
-const PORT = process.env.PORT || 8080;
+// Puerto - AWS usa PORT, local usa 3000
+const PORT = process.env.PORT || 3000;
 
 // Función para iniciar el servidor
 const iniciarServidor = async () => {
@@ -41,7 +51,7 @@ const iniciarServidor = async () => {
     // Sincronizar modelos (solo en desarrollo)
     if (process.env.NODE_ENV === 'development') {
       await sequelize.sync({ alter: false });
-      console.log('Modelos sincronizados con la base de datos');
+      console.log(' Modelos sincronizados con la base de datos');
     }
 
     // Iniciar servidor
@@ -50,11 +60,12 @@ const iniciarServidor = async () => {
       console.log(`Servidor corriendo en puerto ${PORT}`);
       console.log(`URL: http://localhost:${PORT}`);
       console.log(`API Docs: http://localhost:${PORT}/api`);
+      console.log(`Health Check: http://localhost:${PORT}/health`);
       console.log(`Ambiente: ${process.env.NODE_ENV || 'development'}`);
       console.log('='.repeat(50));
     });
   } catch (error) {
-    console.error('Error al iniciar el servidor:', error);
+    console.error('❌ Error al iniciar el servidor:', error);
     process.exit(1);
   }
 };
