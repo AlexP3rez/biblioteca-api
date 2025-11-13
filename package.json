@@ -7,6 +7,10 @@
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
   "keywords": ["api", "biblioteca", "mvc"],
   "author": "Alex Perez",
   "license": "ISC",

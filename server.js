@@ -29,8 +29,8 @@ app.get('/', (req, res) => {
 // Middleware de manejo de errores (debe ir al final)
 app.use(errorHandler);
 
-// Puerto
-const PORT = process.env.PORT || 3000;
+// Puerto - AWS usa la variable PORT, local usa 3000
+const PORT = process.env.PORT || 8080;
 
 // Función para iniciar el servidor
 const iniciarServidor = async () => {
@@ -67,3 +67,5 @@ process.on('unhandledRejection', (err) => {
   console.error('Error no manejado:', err);
   process.exit(1);
 });
+
+module.exports = app;
