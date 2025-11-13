@@ -190,6 +190,40 @@ exports.eliminarLibro = async (req, res) => {
       });
     }
 
+    // Verificar si el libro tiene préstamos activos
+    const Prestamo = require('../models/Prestamo');
+    const prestamosActivos = await Prestamo.count({
+      where: {
+        libro_id: req.params.id,
+        estado: ['activo', 'renovado']
+      }
+    });
+
+    if (prestamosActivos > 0) {
+      return res.status(400).json({
+        success: false,
+        mensaje: `No se puede eliminar el libro. Tiene ${prestamosActivos} préstamo(s) activo(s)`,
+        prestamos_activos: prestamosActivos
+      });
+    }
+
+    // Verificar si el libro tiene préstamos históricos
+    const prestamosHistoricos = await Prestamo.count({
+      where: {
+        libro_id: req.params.id
+      }
+    });
+
+    if (prestamosHistoricos > 0) {
+      return res.status(400).json({
+        success: false,
+        mensaje: `No se puede eliminar el libro. Tiene ${prestamosHistoricos} préstamo(s) en el historial. Considere marcarlo como no disponible en su lugar`,
+        prestamos_historicos: prestamosHistoricos,
+        sugerencia: 'Use PUT /api/libros/:id con {"disponible": false} para ocultarlo'
+      });
+    }
+
+    // Si no tiene préstamos, se puede eliminar
     await libro.destroy();
 
     res.status(200).json({

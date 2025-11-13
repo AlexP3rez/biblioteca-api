@@ -26,7 +26,7 @@ exports.obtenerPrestamos = async (req, res) => {
         {
           model: Libro,
           as: 'libro',
-          attributes: ['id', 'titulo', 'isbn', 'autor']
+          attributes: ['id', 'titulo', 'isbn', 'subtitulo', 'descripcion']  // ✅ SIN 'autor'
         }
       ],
       limit: parseInt(limit),
@@ -65,7 +65,7 @@ exports.obtenerMisPrestamos = async (req, res) => {
         {
           model: Libro,
           as: 'libro',
-          attributes: ['id', 'titulo', 'isbn', 'autor', 'portada_url']
+          attributes: ['id', 'titulo', 'isbn', 'subtitulo', 'descripcion', 'portada_url', 'disponible'] // ✅ CORREGIDO
         }
       ],
       order: [['fecha_prestamo', 'DESC']]
